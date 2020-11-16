@@ -125,6 +125,65 @@
         "<enter><wait>"
       ],
       "boot_wait": "10s",
+      "CPUs": "{{ user `cpus` }}",
+      "storage": {
+        "disk_size": "{{user `disk_size`}}"
+      },
+      "guest_os_type": "ubuntu-64",
+      "http_directory": "{{user `http_directory`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_url": "{{user `mirror`}}/{{user `mirror_directory`}}/{{user `iso_name`}}",
+      "RAM": "{{ user `memory` }}",
+      "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_timeout": "10000s",
+      "ssh_username": "vagrant",
+      "type": "vsphere-iso",
+      "vm_name": "{{ user `template` }}",
+      "cpu_cores": "1",
+      "host": "{{ user `vsphere_host` }}",
+      "vcenter_server": "{{ user `vsphere_host` }}",
+      "cluster": "{{ user `vsphere_host` }}",
+      "datacenter": "{{ user `vsphere_data_center_name` }}",
+      "datastore": "{{ user `vsphere_data_store_name` }}",
+      "username": "{{ user `vsphere_userid` }}",
+      "password": "{{ user `vsphere_password` }}",
+      "insecure_connection": "{{ user `vsphere_insecure` }}",
+      "create_snapshot": true,
+      "convert_to_template": true,
+      "export": {
+        "force": true,
+        "output_directory": "{{ user `build_directory` }}/packer-{{user `template`}}-vmware"
+      }
+    },
+    {
+      "boot_command": [
+        "<esc><wait>",
+        "<esc><wait>",
+        "<enter><wait>",
+        "/install/vmlinuz<wait>",
+        " auto<wait>",
+        " console-setup/ask_detect=false<wait>",
+        " console-setup/layoutcode=us<wait>",
+        " console-setup/modelcode=pc105<wait>",
+        " debconf/frontend=noninteractive<wait>",
+        " debian-installer=en_US.UTF-8<wait>",
+        " fb=false<wait>",
+        " initrd=/install/initrd.gz<wait>",
+        " kbd-chooser/method=us<wait>",
+        " keyboard-configuration/layout=USA<wait>",
+        " keyboard-configuration/variant=USA<wait>",
+        " locale=en_US.UTF-8<wait>",
+        " netcfg/get_domain=vm<wait>",
+        " netcfg/get_hostname=vagrant<wait>",
+        " grub-installer/bootdev=/dev/sda<wait>",
+        " noapic<wait>",
+        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `preseed_path`}}<wait>",
+        " -- <wait>",
+        "<enter><wait>"
+      ],
+      "boot_wait": "10s",
       "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "guest_os_type": "ubuntu",
@@ -222,10 +281,42 @@
     }
   ],
   "post-processors": [
-    {
-      "output": "{{ user `build_directory` }}/{{user `box_basename`}}.{{.Provider}}.box",
-      "type": "vagrant"
-    }
+    [
+      {
+        "output": "{{ user `build_directory` }}/{{user `box_basename`}}.{{.Provider}}.box",
+        "type": "vagrant",
+        "keep_input_artifact": true
+      }
+    ],
+    [
+      {
+        "type": "vsphere",
+        "host": "{{ user `vsphere_host` }}",
+        "cluster": "{{ user `vsphere_cluster` }}",
+        "vm_name": "{{ user `template` }}",
+        "datacenter": "{{ user `vsphere_data_center_name` }}",
+        "datastore": "{{ user `vsphere_data_store_name` }}",
+        "username": "{{ user `vsphere_userid` }}",
+        "password": "{{ user `vsphere_password` }}",
+        "insecure": "{{ user `vsphere_insecure` }}",
+        "vm_folder": "{{ user `vsphere_folder` }}",
+        "keep_input_artifact": true,
+        "options": 
+          [
+          "--I:datastorePath"
+          ]
+      },
+      {
+        "type": "vsphere-template",
+        "host": "{{ user `vsphere_host` }}",
+        "datacenter": "{{ user `vsphere_data_center_name` }}",
+        "insecure": "{{ user `vsphere_insecure` }}",
+        "username": "{{ user `vsphere_userid` }}",
+        "password": "{{ user `vsphere_password` }}",
+        "folder": "{{ user `vsphere_folder` }}",
+        "keep_input_artifact": true
+      }
+    ]
   ],
   "provisioners": [
     {
@@ -277,6 +368,19 @@
     "no_proxy": "{{env `no_proxy`}}",
     "preseed_path": "preseed.cfg",
     "template": "ubuntu-18.04-amd64",
-    "version": "TIMESTAMP"
+    "version": "TIMESTAMP",
+    "vsphere_host": "{{env `VSPHERE_HOST`}}",
+    "vshpere_enabled": "{{env `VSPHERE_ENABLED`}}",
+    "vsphere_userid": "{{env `VSPHERE_USERID`}}",
+    "vsphere_password": "{{env `VSPHERE_PASSWORD`}}",
+    "vsphere_guest_name": "{{env `VSPHERE_GUEST_NAME`}}",
+    "vsphere_insecure": "{{env `VSPHERE_INSECURE`}}",
+    "vsphere_resource_pool": "{{env `VSPHERE_RESOURCE_POOL`}}",
+    "vsphere_compute_resource_name": "{{env `VSPHERE_COMPUTE_RESOURCE_NAME`}}",
+    "vsphere_cluster": "{{ env `VSPHERE_CLUSTER` }}",
+    "vsphere_data_store_name": "{{env `VSPHERE_DATA_STORE_NAME`}}",
+    "vsphere_template_name": "{{env `VSPHERE_TEMPLATE_NAME`}}",
+    "vsphere_data_center_name": "{{env `VSPHERE_DATA_CENTER`}}",
+    "vsphere_folder": "{{ env `VSPHERE_FOLDER` }}"
   }
 }
