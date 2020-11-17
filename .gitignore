@@ -18,3 +18,5 @@ bootstrap.sh
 Berksfile.lock
 ubuntu/scripts/homestead.sh
 *.log
+# Local for AHEAD
+environment.sh
