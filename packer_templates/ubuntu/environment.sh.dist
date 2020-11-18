@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+echo "You must source this file, like so:"
+echo "source $BASH_SOURCE"
+
+export VSPHERE_ENABLED="true"
+export VSPHERE_USERID=""
+export VSPHERE_PASSWORD=""
+export VSPHERE_HOST=""
+export VSPHERE_GUEST_NAME=""
+export VSPHERE_INSECURE=""
+export VSPHERE_RESOURCE_POOL=""
+export VSPHERE_COMPUTE_RESOURCE_NAME=""
+export VSPHERE_DATA_STORE_NAME=""
+export VSPHERE_TEMPLATE_NAME=""
+export VSPHERE_NETWORK_NAME=""
+

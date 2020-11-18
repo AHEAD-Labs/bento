@@ -95,8 +95,7 @@
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
         "ethernet0.pciSlotNumber": "32"
-      },
-      "vmx_remove_ethernet_interfaces": true
+      }
     },
     {
       "boot_command": [
@@ -300,10 +299,14 @@
         "password": "{{ user `vsphere_password` }}",
         "insecure": "{{ user `vsphere_insecure` }}",
         "vm_folder": "{{ user `vsphere_folder` }}",
+        "vm_network": "{{ user `vsphere_network_name` }}",
         "keep_input_artifact": true,
-        "options": 
+        "options":
           [
-          "--I:datastorePath"
+          "--I:datastorePath",
+          "--X:logLevel=verbose",
+          "--X:logFile=/tmp/ovflogfile.log",
+          "--X:logToConsole"
           ]
       },
       {
@@ -313,8 +316,8 @@
         "insecure": "{{ user `vsphere_insecure` }}",
         "username": "{{ user `vsphere_userid` }}",
         "password": "{{ user `vsphere_password` }}",
-        "folder": "{{ user `vsphere_folder` }}",
-        "keep_input_artifact": true
+        "keep_input_artifact": true,
+        "reregister_vm": false
       }
     ]
   ],
@@ -379,6 +382,7 @@
     "vsphere_compute_resource_name": "{{env `VSPHERE_COMPUTE_RESOURCE_NAME`}}",
     "vsphere_cluster": "{{ env `VSPHERE_CLUSTER` }}",
     "vsphere_data_store_name": "{{env `VSPHERE_DATA_STORE_NAME`}}",
+    "vsphere_network_name": "{{ env `VSPHERE_NETWORK_NAME` }}",
     "vsphere_template_name": "{{env `VSPHERE_TEMPLATE_NAME`}}",
     "vsphere_data_center_name": "{{env `VSPHERE_DATA_CENTER`}}",
     "vsphere_folder": "{{ env `VSPHERE_FOLDER` }}"
