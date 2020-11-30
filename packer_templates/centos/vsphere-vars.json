@@ -1,0 +1,13 @@
+{
+      "vcenter_server": "401mstrvc01.aheadaviation.local",
+      "vcenter_cluster": "MX 740",
+      "vcenter_datastore": "SC_Templates",
+      "vcenter_host": "401mx740esxi2.lab.aheadaviation.com",
+      "vcenter_vlan": "401PG_VLAN_132_General_VMs",
+      "isoroot_path": "[SC_ISO Folder] /",
+      "vcenter_folder": "Templates/PackerBuilds",
+      "floppyimg_path": "[SC_ISO Folder] Windows_Support/pvscsi-Windows8.flp",
+      "vmtoolsiso_path": "[SC_ISO Folder] Windows_Support/VMware-tools-windows-11.0.1-14773994.iso",
+      "vcenter_resourcepool": "Cloud Practice",
+      "vcenter_datacenter": "401 N Michigan"
+}
