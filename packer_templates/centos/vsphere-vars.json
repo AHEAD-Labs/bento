@@ -5,7 +5,7 @@
       "vcenter_host": "401mx740esxi2.lab.aheadaviation.com",
       "vcenter_vlan": "401PG_VLAN_132_General_VMs",
       "isoroot_path": "[SC_ISO Folder] /",
-      "vcenter_folder": "Templates/PackerBuilds",
+      "vcenter_folder": "Templates/Mayo",
       "floppyimg_path": "[SC_ISO Folder] Windows_Support/pvscsi-Windows8.flp",
       "vmtoolsiso_path": "[SC_ISO Folder] Windows_Support/VMware-tools-windows-11.0.1-14773994.iso",
       "vcenter_resourcepool": "Cloud Practice",
@@ -13,7 +13,7 @@
       "vcenter_username": "{{env `vmwarecreds_USR`}}",
       "vcenter_password": "{{env `vmwarecreds_PSW`}}",
       "packer_password": "{{env `packercreds_PSW`}}",
-      "vm_guest_os_type": "centos8_64Guest_mayo",
+      "vm_guest_os_type": "centos-64",
       "vm_guest_prefix": "centos8",
       "os_iso_path": "[SC_ISO Folder] CentOS/CentOS-8-x86_64-1905-dvd1.iso",
       "guestfolder": "centos8"
