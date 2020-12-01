@@ -13,10 +13,8 @@
       "vcenter_username": "{{env `vmwarecreds_USR`}}",
       "vcenter_password": "{{env `vmwarecreds_PSW`}}",
       "packer_password": "{{env `packercreds_PSW`}}",
-      "vm_guest_os_type": "{{env `GUEST_OS_TYPE`}}",
-      "vm_guest_prefix": "{{env `GUEST_FOLDER`}}",
-      "os_iso_path": "{{env `OS_ISO_PATH`}}",
-      "jobnumber": "{{env `BUILD_NUMBER`}}",
-      "jobname": "{{env `JOB_BASE_NAME`}}",
-      "guestfolder": "{{env `GUEST_FOLDER`}}"
+      "vm_guest_os_type": "centos8_64Guest_mayo",
+      "vm_guest_prefix": "centos8",
+      "os_iso_path": "[SC_ISO Folder] CentOS/CentOS-8-x86_64-1905-dvd1.iso",
+      "guestfolder": "centos8"
 }
