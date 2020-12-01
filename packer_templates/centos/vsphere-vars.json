@@ -9,5 +9,14 @@
       "floppyimg_path": "[SC_ISO Folder] Windows_Support/pvscsi-Windows8.flp",
       "vmtoolsiso_path": "[SC_ISO Folder] Windows_Support/VMware-tools-windows-11.0.1-14773994.iso",
       "vcenter_resourcepool": "Cloud Practice",
-      "vcenter_datacenter": "401 N Michigan"
+      "vcenter_datacenter": "401 N Michigan",
+      "vcenter_username": "{{env `vmwarecreds_USR`}}",
+      "vcenter_password": "{{env `vmwarecreds_PSW`}}",
+      "packer_password": "{{env `packercreds_PSW`}}",
+      "vm_guest_os_type": "{{env `GUEST_OS_TYPE`}}",
+      "vm_guest_prefix": "{{env `GUEST_FOLDER`}}",
+      "os_iso_path": "{{env `OS_ISO_PATH`}}",
+      "jobnumber": "{{env `BUILD_NUMBER`}}",
+      "jobname": "{{env `JOB_BASE_NAME`}}",
+      "guestfolder": "{{env `GUEST_FOLDER`}}"
 }
