@@ -95,8 +95,7 @@
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
         "ethernet0.pciSlotNumber": "32"
-      },
-      "vmx_remove_ethernet_interfaces": true
+      }
     },
     {
       "boot_command": [
@@ -222,10 +221,46 @@
     }
   ],
   "post-processors": [
-    {
-      "output": "{{ user `build_directory` }}/{{user `box_basename`}}.{{.Provider}}.box",
-      "type": "vagrant"
-    }
+    [
+      {
+        "output": "{{ user `build_directory` }}/{{user `box_basename`}}.{{.Provider}}.box",
+        "type": "vagrant",
+        "keep_input_artifact": true
+      }
+    ],
+    [
+      {
+        "type": "vsphere",
+        "host": "{{ user `vsphere_host` }}",
+        "cluster": "{{ user `vsphere_cluster` }}",
+        "vm_name": "{{ user `template` }}",
+        "datacenter": "{{ user `vsphere_data_center_name` }}",
+        "datastore": "{{ user `vsphere_data_store_name` }}",
+        "username": "{{ user `vsphere_userid` }}",
+        "password": "{{ user `vsphere_password` }}",
+        "insecure": "{{ user `vsphere_insecure` }}",
+        "vm_folder": "{{ user `vsphere_folder` }}",
+        "vm_network": "{{ user `vsphere_network_name` }}",
+        "keep_input_artifact": true,
+        "options":
+          [
+          "--I:datastorePath",
+          "--X:logLevel=verbose",
+          "--X:logFile=/tmp/ovflogfile.log",
+          "--X:logToConsole"
+          ]
+      },
+      {
+        "type": "vsphere-template",
+        "host": "{{ user `vsphere_host` }}",
+        "datacenter": "{{ user `vsphere_data_center_name` }}",
+        "insecure": "{{ user `vsphere_insecure` }}",
+        "username": "{{ user `vsphere_userid` }}",
+        "password": "{{ user `vsphere_password` }}",
+        "keep_input_artifact": true,
+        "reregister_vm": false
+      }
+    ]
   ],
   "provisioners": [
     {
@@ -277,6 +312,20 @@
     "no_proxy": "{{env `no_proxy`}}",
     "preseed_path": "preseed.cfg",
     "template": "ubuntu-20.04-amd64",
-    "version": "TIMESTAMP"
+    "version": "TIMESTAMP",
+    "vsphere_host": "{{env `VSPHERE_HOST`}}",
+    "vshpere_enabled": "{{env `VSPHERE_ENABLED`}}",
+    "vsphere_userid": "{{env `VSPHERE_USERID`}}",
+    "vsphere_password": "{{env `VSPHERE_PASSWORD`}}",
+    "vsphere_guest_name": "{{env `VSPHERE_GUEST_NAME`}}",
+    "vsphere_insecure": "{{env `VSPHERE_INSECURE`}}",
+    "vsphere_resource_pool": "{{env `VSPHERE_RESOURCE_POOL`}}",
+    "vsphere_compute_resource_name": "{{env `VSPHERE_COMPUTE_RESOURCE_NAME`}}",
+    "vsphere_cluster": "{{ env `VSPHERE_CLUSTER` }}",
+    "vsphere_data_store_name": "{{env `VSPHERE_DATA_STORE_NAME`}}",
+    "vsphere_network_name": "{{ env `VSPHERE_NETWORK_NAME` }}",
+    "vsphere_template_name": "{{env `VSPHERE_TEMPLATE_NAME`}}",
+    "vsphere_data_center_name": "{{env `VSPHERE_DATA_CENTER`}}",
+    "vsphere_folder": "{{ env `VSPHERE_FOLDER` }}"
   }
 }
