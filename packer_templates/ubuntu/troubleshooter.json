@@ -36,7 +36,6 @@
       {
         "type": "vsphere-template",
         "host": "{{ user `vsphere_host` }}",
-        "cluster": "{{ user `vsphere_cluster` }}",
         "datacenter": "{{ user `vsphere_data_center_name` }}",
         "insecure": "{{ user `vsphere_insecure` }}",
         "username": "{{ user `vsphere_userid` }}",
