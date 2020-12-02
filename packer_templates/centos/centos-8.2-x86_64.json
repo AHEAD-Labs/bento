@@ -22,22 +22,24 @@
       "convert_to_template": false,
 
       "communicator": "ssh",
+      "ssh_username": "root",
+      "ssh_password": "{{user `packer_password`}}",
 
+      "CPUs":             2,
+      "RAM":              4096,
+      "RAM_reserve_all": true,
+
+      "disk_controller_type":  "pvscsi",
+      "disk_size":        61440,
+      "disk_thin_provisioned": true,
+
+      "network_card": "vmxnet3",
+
+      "iso_url": "{{user `mirror`}}/{{user `mirror_directory`}}/{{user `iso_name`}}",
       "boot_command": [
         "<up><wait><tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `ks_path`}}<enter><wait>"
       ],
       "boot_wait": "10s",
-      "cpus": "{{ user `cpus` }}",
-      "disk_size": "{{user `disk_size`}}",
-      "http_directory": "{{user `http_directory`}}",
-      "iso_checksum": "{{user `iso_checksum`}}",
-      "iso_url": "{{user `mirror`}}/{{user `mirror_directory`}}/{{user `iso_name`}}",
-      "RAM": "{{ user `memory` }}",
-      "shutdown_command": "echo 'vagrant' | sudo -S /sbin/halt -h -p",
-      "ssh_password": "{{ user `packer_password` }}",
-      "ssh_port": 22,
-      "ssh_timeout": "10000s",
-      "ssh_username": "vagrant",
       "type": "vsphere-iso"
     },
     {
