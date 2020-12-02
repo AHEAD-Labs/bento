@@ -1,7 +1,7 @@
 {
       "vcenter_server": "401mstrvc01.lab.aheadaviation.com",
       "vcenter_cluster": "MX 740",
-      "vcenter_datastore": "SC_Templates",
+      "vcenter_datastore": "SC_Cloud Practice",
       "vcenter_host": "401mx740esxi2.lab.aheadaviation.com",
       "vcenter_vlan": "401PG_VLAN_132_General_VMs",
       "isoroot_path": "[SC_ISO Folder]/",
