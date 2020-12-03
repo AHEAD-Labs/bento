@@ -12,9 +12,6 @@
       "vcenter_datacenter": "401 N Michigan",
       "vcenter_username": "{{env `vmwarecreds_USR`}}",
       "vcenter_password": "{{env `vmwarecreds_PSW`}}",
-      "packer_password": "{{env `packercreds_PSW`}}",
-      "vm_guest_os_type": "centos-64",
-      "vm_guest_prefix": "centos8",
-      "os_iso_path": "[SC_ISO Folder] CentOS/CentOS-8-x86_64-1905-dvd1.iso",
-      "guestfolder": "centos8"
+      "packer_password": "{{env `packercreds_PSW`}}"
+      
 }
