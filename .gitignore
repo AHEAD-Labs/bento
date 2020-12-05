@@ -20,3 +20,4 @@ ubuntu/scripts/homestead.sh
 *.log
 # Local for AHEAD
 environment.sh
+environment*.sh
