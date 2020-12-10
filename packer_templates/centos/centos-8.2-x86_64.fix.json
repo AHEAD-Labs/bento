@@ -66,8 +66,9 @@
       "expect_disconnect": true,
       "scripts": [
         "{{template_dir}}/scripts/update.sh",
+        "{{template_dir}}/scripts/networking.sh",
         "{{template_dir}}/scripts/cleanup.sh",
-        "{{template_dir}}/../_common/minimize.sh"
+        "{{template_dir}}/scripts/minimize.sh"
       ],
       "type": "shell"
     }
@@ -90,8 +91,6 @@
     "iso_name": "CentOS-8.2.2004-x86_64-minimal.iso",
     "ks_path": "8/ks.cfg",
     "memory": "1024",
-    "mirror": "http://mirrors.kernel.org/centos",
-    "mirror_directory": "8.2.2004/isos/x86_64",
     "name": "centos-8.2",
     "no_proxy": "{{env `no_proxy`}}",
     "template": "centos-8.2-x86_64",

@@ -66,15 +66,9 @@
       "expect_disconnect": true,
       "scripts": [
         "{{template_dir}}/scripts/update.sh",
-        "{{template_dir}}/../_common/motd.sh",
-        "{{template_dir}}/../_common/sshd.sh",
         "{{template_dir}}/scripts/networking.sh",
-        "{{template_dir}}/../_common/vagrant.sh",
-        "{{template_dir}}/../_common/virtualbox.sh",
-        "{{template_dir}}/../_common/vmware.sh",
-        "{{template_dir}}/../_common/parallels.sh",
         "{{template_dir}}/scripts/cleanup.sh",
-        "{{template_dir}}/../_common/minimize.sh"
+        "{{template_dir}}/scripts/minimize.sh"
       ],
       "type": "shell"
     }
