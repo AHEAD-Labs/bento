@@ -26,8 +26,8 @@ $pkg_cmd -y remove gcc cpp gc kernel-devel kernel-headers glibc-devel elfutils-l
 if [ "$major_version" -ge 8 ]; then
   echo "remove orphaned packages"
   dnf -y autoremove
-  echo "Remove previous kernels that preserved for rollbacks"
-  dnf -y remove -y $(dnf repoquery --installonly --latest-limit=-1 -q)
+  #echo "Remove previous kernels that preserved for rollbacks"
+  #dnf -y remove -y $(dnf repoquery --installonly --skip-broken --latest-limit=-1 -q)
 else
   echo "Remove previous kernels that preserved for rollbacks"
   if ! command -v package-cleanup >/dev/null 2>&1; then

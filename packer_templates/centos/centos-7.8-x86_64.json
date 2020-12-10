@@ -5,10 +5,9 @@
       
       "RAM": "{{ user `memory` }}",
       "boot_command": [
-        "<tab> linux ks=hd:fd0:/ks.cfg<enter><wait>"
+        "<tab> linux ks=hd:sr1:/http/{{user `ks_path`}}<enter><wait>"
       ],
-      "floppy_files": ["http/7/ks.cfg"],
-      "http_directory": "{{template_dir}}/http",
+      
       "boot_wait": "10s",
       "cluster": "{{user `vcenter_cluster`}}",
       "communicator": "ssh",
@@ -20,10 +19,14 @@
       "guest_os_type": "{{user `vm_guest_os_type`}}",
       "host": "{{user `vcenter_host`}}",
       "insecure_connection": "true",
-      "iso_checksum": "{{user `iso_checksum`}}",
       "iso_paths": [
         "{{user `os_iso_path`}}"
       ],
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "cd_files": ["http"],
+      "cd_label": "KICKSTART",
+      
+      
       "network_adapters": [
         {
           "network": "{{user `vcenter_vlan`}}"
@@ -45,7 +48,7 @@
       
       "username": "{{user `vcenter_username`}}",
       "vcenter_server": "{{user `vcenter_server`}}",
-      "vm_name": "{{user `vm_guest_prefix`}}_tmp{{timestamp}}",
+      "vm_name": "{{user `vm_guest_prefix`}}",
       "vm_version": "13"
     }
     
@@ -90,13 +93,11 @@
     "https_proxy": "{{env `https_proxy`}}",
     "hyperv_generation": "1",
     "hyperv_switch": "{{env `hyperv_switch`}}",
-    "iso_checksum": "659691c28a0e672558b003d223f83938f254b39875ee7559d1a4a14c79173193",
-    "iso_name": "CentOS-7-x86_64-Minimal-2003.iso",
+    "iso_checksum": "9e6a84f5548820c08e978fd32757dfa4fcef8e5681719d0566d93431b4bf3a4b",
+    "iso_name": "CentOS-7-x86_64-Minimal-2009.iso",
     "ks_path": "7/ks.cfg",
     "memory": "1024",
-    "mirror": "http://mirrors.kernel.org/centos",
-    "mirror_directory": "7.8.2003/isos/x86_64",
-    "name": "centos-7.8",
+    "name": "centos-7.89",
     "no_proxy": "{{env `no_proxy`}}",
     "template": "centos-7.8-x86_64",
     "version": "TIMESTAMP",

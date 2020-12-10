@@ -2,13 +2,12 @@
   "builders": [
     {
       "type": "vsphere-iso",
-      "cd_files": ["./somedirectory/meta-data", "./somedirectory/user-data"],
-      "cd_label": "cidata",
+      
       "RAM": "{{ user `memory` }}",
       "boot_command": [
-        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `ks_path`}}<enter><wait>"
+        "<tab> linux ks=hd:sr1:/http/{{user `ks_path`}}<enter><wait>"
       ],
-      "http_directory": "{{template_dir}}/http",
+      
       "boot_wait": "10s",
       "cluster": "{{user `vcenter_cluster`}}",
       "communicator": "ssh",
@@ -20,10 +19,14 @@
       "guest_os_type": "{{user `vm_guest_os_type`}}",
       "host": "{{user `vcenter_host`}}",
       "insecure_connection": "true",
-      "iso_checksum": "{{user `iso_checksum`}}",
       "iso_paths": [
         "{{user `os_iso_path`}}"
       ],
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "cd_files": ["http"],
+      "cd_label": "KICKSTART",
+      
+      
       "network_adapters": [
         {
           "network": "{{user `vcenter_vlan`}}"
@@ -45,17 +48,12 @@
       
       "username": "{{user `vcenter_username`}}",
       "vcenter_server": "{{user `vcenter_server`}}",
-      "vm_name": "{{user `vm_guest_prefix`}}_tmp{{timestamp}}",
+      "vm_name": "{{user `vm_guest_prefix`}}",
       "vm_version": "13"
     }
     
   ],
-  "post-processors": [
-    {
-      "output": "{{ user `build_directory` }}/{{user `box_basename`}}.{{.Provider}}.box",
-      "type": "vagrant"
-    }
-  ],
+  
   "provisioners": [
     {
       "environment_vars": [
@@ -68,13 +66,6 @@
       "expect_disconnect": true,
       "scripts": [
         "{{template_dir}}/scripts/update.sh",
-        "{{template_dir}}/../_common/motd.sh",
-        "{{template_dir}}/../_common/sshd.sh",
-        "{{template_dir}}/scripts/networking.sh",
-        "{{template_dir}}/../_common/vagrant.sh",
-        "{{template_dir}}/../_common/virtualbox.sh",
-        "{{template_dir}}/../_common/vmware.sh",
-        "{{template_dir}}/../_common/parallels.sh",
         "{{template_dir}}/scripts/cleanup.sh",
         "{{template_dir}}/../_common/minimize.sh"
       ],
@@ -86,7 +77,7 @@
     "build_directory": "../../builds",
     "build_timestamp": "{{isotime \"2019102650405\"}}",
     "cpus": "1",
-    "disk_size": "65536",
+    "disk_size": "80536",
     "git_revision": "__unknown_git_revision__",
     "guest_additions_url": "",
     "headless": "",
