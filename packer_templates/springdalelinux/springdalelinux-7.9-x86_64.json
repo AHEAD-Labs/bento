@@ -1,15 +1,13 @@
 {
   "builders": [
     {
-      "boot_command": [
-        "<up><wait><tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `ks_path`}} net.ifnames=0 biosdevname=0<enter><wait>"
-      ],
-      "boot_wait": "10s",
+      "boot_command": "{{ user `boot_command` }}",
+      "boot_wait": "5s",
       "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
       "guest_additions_url": "{{ user `guest_additions_url` }}",
-      "guest_os_type": "Oracle_64",
+      "guest_os_type": "RedHat_64",
       "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
       "http_directory": "{{user `http_directory`}}",
@@ -27,13 +25,11 @@
       "vm_name": "{{ user `template` }}"
     },
     {
-      "boot_command": [
-        "<up><wait><tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `ks_path`}} net.ifnames=0 biosdevname=0 <enter><wait>"
-      ],
-      "boot_wait": "10s",
+      "boot_command": "{{ user `boot_command` }}",
+      "boot_wait": "5s",
       "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
-      "guest_os_type": "oraclelinux-64",
+      "guest_os_type": "centos-64",
       "headless": "{{ user `headless` }}",
       "http_directory": "{{user `http_directory`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
@@ -54,10 +50,8 @@
       "vmx_remove_ethernet_interfaces": true
     },
     {
-      "boot_command": [
-        "<up><wait><tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `ks_path`}} net.ifnames=0 biosdevname=0<enter><wait>"
-      ],
-      "boot_wait": "10s",
+      "boot_command": "{{user `boot_command`}}",
+      "boot_wait": "5s",
       "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "guest_os_type": "centos",
@@ -78,9 +72,9 @@
     },
     {
       "boot_command": [
-        "<wait5><tab> text ks=hd:fd0:/ks.cfg net.ifnames=0 biosdevname=0<enter><wait5><esc>"
+        "<wait5><up><wait5><tab> text ks=hd:fd0:/ks.cfg<enter><wait5><esc>"
       ],
-      "boot_wait": "10s",
+      "boot_wait": "5s",
       "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
@@ -103,10 +97,8 @@
       "vm_name": "{{ user `template` }}"
     },
     {
-      "boot_command": [
-        "<up><wait><tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `ks_path`}} net.ifnames=0 biosdevname=0<enter><wait>"
-      ],
-      "boot_wait": "10s",
+      "boot_command": "{{ user `boot_command` }}",
+      "boot_wait": "5s",
       "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "headless": "{{ user `headless` }}",
@@ -156,11 +148,10 @@
     }
   ],
   "variables": {
-    "arch": "64",
-    "box_basename": "oracle-7.8",
+    "box_basename": "springdalelinux-7.9",
     "build_directory": "../../builds",
-    "build_timestamp": "{{isotime \"20060102150405\"}}",
-    "cpus": "1",
+    "build_timestamp": "{{isotime \"2019102650405\"}}",
+    "cpus": "2",
     "disk_size": "65536",
     "git_revision": "__unknown_git_revision__",
     "guest_additions_url": "",
@@ -169,16 +160,17 @@
     "http_proxy": "{{env `http_proxy`}}",
     "https_proxy": "{{env `https_proxy`}}",
     "hyperv_generation": "1",
-    "hyperv_switch": "{{env `hyperv_switch`}}",
-    "iso_checksum": "6e1069ff42f7e59b19af4e2fcacae2fca3f195c7f2904275b0df386efdcd616d",
-    "iso_name": "OracleLinux-R7-U8-Server-x86_64-dvd.iso",
+    "hyperv_switch": "bento",
+    "iso_checksum": "f4324776f92ee6f4d8a8fc96ddcb7b346e96a51cbc6eac39b51ac8b485a602ad",
+    "iso_name": "Springdale%20Linux-7.5-x86_64-DVD.iso",
     "ks_path": "7/ks.cfg",
     "memory": "1024",
-    "mirror": "http://mirrors.dotsrc.org/oracle-linux",
-    "mirror_directory": "OL7/u8/x86_64",
-    "name": "oracle-7.8",
+    "mirror": "http://springdale.princeton.edu/data/springdale",
+    "mirror_directory": "7.5/x86_64/iso",
+    "name": "springdalelinux-7.9",
     "no_proxy": "{{env `no_proxy`}}",
-    "template": "oracle-7.8-x86_64",
+    "template": "springdalelinux-7.9-x86_64",
+    "boot_command": "<up><wait><tab> inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `ks_path`}}<enter><wait>",
     "version": "TIMESTAMP"
   }
 }

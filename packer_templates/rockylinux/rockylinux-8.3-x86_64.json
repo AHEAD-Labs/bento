@@ -1,10 +1,8 @@
 {
   "builders": [
     {
-      "boot_command": [
-        "<up><wait><tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `ks_path`}}<enter><wait>"
-      ],
-      "boot_wait": "10s",
+      "boot_command": "{{ user `boot_command` }}",
+      "boot_wait": "5s",
       "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
@@ -27,10 +25,8 @@
       "vm_name": "{{ user `template` }}"
     },
     {
-      "boot_command": [
-        "<up><wait><tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `ks_path`}}<enter><wait>"
-      ],
-      "boot_wait": "10s",
+      "boot_command": "{{ user `boot_command` }}",
+      "boot_wait": "5s",
       "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "guest_os_type": "centos-64",
@@ -54,10 +50,8 @@
       "vmx_remove_ethernet_interfaces": true
     },
     {
-      "boot_command": [
-        "<up><wait><tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `ks_path`}}<enter><wait>"
-      ],
-      "boot_wait": "10s",
+      "boot_command": "{{user `boot_command`}}",
+      "boot_wait": "5s",
       "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "guest_os_type": "centos",
@@ -78,9 +72,9 @@
     },
     {
       "boot_command": [
-        "<wait5><tab> text ks=hd:fd0:/ks.cfg<enter><wait5><esc>"
+        "<wait5><up><wait5><tab> text ks=hd:fd0:/ks.cfg<enter><wait5><esc>"
       ],
-      "boot_wait": "10s",
+      "boot_wait": "5s",
       "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
@@ -103,10 +97,8 @@
       "vm_name": "{{ user `template` }}"
     },
     {
-      "boot_command": [
-        "<up><wait><tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `ks_path`}}<enter><wait>"
-      ],
-      "boot_wait": "10s",
+      "boot_command": "{{ user `boot_command` }}",
+      "boot_wait": "5s",
       "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "headless": "{{ user `headless` }}",
@@ -125,46 +117,10 @@
     }
   ],
   "post-processors": [
-    [
-      {
+    {
       "output": "{{ user `build_directory` }}/{{user `box_basename`}}.{{.Provider}}.box",
-      "type": "vagrant",
-        "keep_input_artifact": true
-      }
-    ],
-    [
-      {
-        "type": "vsphere",
-        "host": "{{ user `vsphere_host` }}",
-        "cluster": "{{ user `vsphere_cluster` }}",
-        "vm_name": "{{ user `template` }}",
-        "datacenter": "{{ user `vsphere_data_center_name` }}",
-        "datastore": "{{ user `vsphere_data_store_name` }}",
-        "username": "{{ user `vsphere_userid` }}",
-        "password": "{{ user `vsphere_password` }}",
-        "insecure": "{{ user `vsphere_insecure` }}",
-        "vm_folder": "{{ user `vsphere_folder` }}",
-        "vm_network": "{{ user `vsphere_network_name` }}",
-        "keep_input_artifact": true,
-        "options":
-          [
-          "--I:datastorePath",
-          "--X:logLevel=verbose",
-          "--X:logFile=/tmp/ovflogfile.log",
-          "--X:logToConsole"
-          ]
-      },
-      {
-        "type": "vsphere-template",
-        "host": "{{ user `vsphere_host` }}",
-        "datacenter": "{{ user `vsphere_data_center_name` }}",
-        "insecure": "{{ user `vsphere_insecure` }}",
-        "username": "{{ user `vsphere_userid` }}",
-        "password": "{{ user `vsphere_password` }}",
-        "keep_input_artifact": true,
-        "reregister_vm": false
-      }
-    ]
+      "type": "vagrant"
+    }
   ],
   "provisioners": [
     {
@@ -177,58 +133,44 @@
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
       "expect_disconnect": true,
       "scripts": [
-        "{{template_dir}}/scripts/update.sh",
+        "{{template_dir}}/../centos/scripts/update.sh",
         "{{template_dir}}/../_common/motd.sh",
         "{{template_dir}}/../_common/sshd.sh",
-        "{{template_dir}}/scripts/networking.sh",
+        "{{template_dir}}/../centos/scripts/networking.sh",
         "{{template_dir}}/../_common/vagrant.sh",
         "{{template_dir}}/../_common/virtualbox.sh",
         "{{template_dir}}/../_common/vmware.sh",
         "{{template_dir}}/../_common/parallels.sh",
-        "{{template_dir}}/scripts/cleanup.sh",
+        "{{template_dir}}/../centos/scripts/cleanup.sh",
         "{{template_dir}}/../_common/minimize.sh"
       ],
       "type": "shell"
     }
   ],
   "variables": {
-    "box_basename": "centos-7.8",
+    "box_basename": "rockylinux-8.3",
     "build_directory": "../../builds",
-    "build_timestamp": "{{isotime \"20060102150405\"}}",
-    "cpus": "1",
+    "build_timestamp": "{{isotime \"2019102650405\"}}",
+    "cpus": "2",
     "disk_size": "65536",
     "git_revision": "__unknown_git_revision__",
     "guest_additions_url": "",
     "headless": "",
-    "http_directory": "{{template_dir}}/http",
+    "http_directory": "{{template_dir}}/../centos/http",
     "http_proxy": "{{env `http_proxy`}}",
     "https_proxy": "{{env `https_proxy`}}",
     "hyperv_generation": "1",
-    "hyperv_switch": "{{env `hyperv_switch`}}",
-    "iso_checksum": "659691c28a0e672558b003d223f83938f254b39875ee7559d1a4a14c79173193",
-    "iso_name": "CentOS-7-x86_64-Minimal-2003.iso",
-    "ks_path": "7/ks.cfg",
+    "hyperv_switch": "bento",
+    "iso_checksum": "4be83f5edf28209ce5caa06995c1c3fc5112d0d260b9e8c1cc2fecd384abcee0",
+    "iso_name": "Rocky-8.3-x86_64-dvd1.iso",
+    "ks_path": "8/ks.cfg",
     "memory": "1024",
-    "mirror": "http://mirrors.kernel.org/centos",
-    "mirror_directory": "7.8.2003/isos/x86_64",
-    "name": "centos-7.8",
+    "mirror": "http://download.rockylinux.org/pub/rocky",
+    "mirror_directory": "8.3/isos/x86_64",
+    "name": "rockylinux-8.3",
     "no_proxy": "{{env `no_proxy`}}",
-    "template": "centos-7.8-x86_64",
-    "version": "TIMESTAMP",
-    "vsphere_host": "{{env `VSPHERE_HOST`}}",
-    "vshpere_enabled": "{{env `VSPHERE_ENABLED`}}",
-    "vsphere_userid": "{{env `VSPHERE_USERID`}}",
-    "vsphere_password": "{{env `VSPHERE_PASSWORD`}}",
-    "vsphere_guest_name": "{{env `VSPHERE_GUEST_NAME`}}",
-    "vsphere_insecure": "{{env `VSPHERE_INSECURE`}}",
-    "vsphere_resource_pool": "{{env `VSPHERE_RESOURCE_POOL`}}",
-    "vsphere_compute_resource_name": "{{env `VSPHERE_COMPUTE_RESOURCE_NAME`}}",
-    "vsphere_cluster": "{{ env `VSPHERE_CLUSTER` }}",
-    "vsphere_data_store_name": "{{env `VSPHERE_DATA_STORE_NAME`}}",
-    "vsphere_network_name": "{{ env `VSPHERE_NETWORK_NAME` }}",
-    "vsphere_template_name": "{{env `VSPHERE_TEMPLATE_NAME`}}",
-    "vsphere_data_center_name": "{{env `VSPHERE_DATA_CENTER`}}",
-    "vsphere_folder": "{{ env `VSPHERE_FOLDER` }}"
+    "template": "rockylinux-8.3-x86_64",
+    "boot_command": "<up><wait><tab> inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `ks_path`}}<enter><wait>",
+    "version": "TIMESTAMP"
   }
 }
-

@@ -25,13 +25,14 @@ end
 #### Requirements
 
 - [Packer](https://www.packer.io/)
+- [Vagrant](https://www.vagrantup.com/)
 - At least one of the following virtualization providers:
-  - [VirtualBox](https://www.virtualbox.org)
+  - [VirtualBox](https://www.virtualbox.org/)
   - [VMware Fusion](https://www.vmware.com/products/fusion.html)
-  - [VMware Workstation](https://www.vmware.com/products/workstation.html)
-  - [Parallels Desktop](http://www.parallels.com/products/desktop) also requires [Parallels Virtualization SDK](https://www.parallels.com/products/desktop/download/)
+  - [VMware Workstation](https://www.vmware.com/products/workstation-pro.html)
+  - [Parallels Desktop](https://www.parallels.com/products/desktop/) also requires [Parallels Virtualization SDK](https://www.parallels.com/products/desktop/download/)
   - [KVM](https://www.linux-kvm.org/page/Main_Page) *
-  - [Hyper-V](https://technet.microsoft.com/en-us/library/hh831531(v=ws.11).aspx) *
+  - [Hyper-V](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/about/) *
 
 \***NOTE:** support for these providers is considered experimental and corresponding Vagrant Cloud images may or may not exist.
 
@@ -44,11 +45,11 @@ $ cd packer_templates/ubuntu
 $ packer build -only=virtualbox-iso ubuntu-18.04-amd64.json
 ```
 
-To build Debian 10.6 32bit boxes for all possible providers (simultaneously)
+To build Debian 10.9 32bit boxes for all possible providers (simultaneously)
 
 ```
 $ cd packer_templates/debian
-$ packer build debian-10.6-i386.json
+$ packer build debian-10.9-i386.json
 ```
 
 To build CentOS 7.7 boxes for all providers except VMware and Parallels
